@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* plus-jakarta-sans-latin-wght-normal */
+@font-face {
+	font-family: 'Plus Jakarta Sans Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 200 800;
+	src: url(https://cdn.jsdelivr.net/fontsource/fonts/plus-jakarta-sans:vf@latest/latin-wght-normal.woff2)
+		format('woff2-variations');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+		U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+		U+FFFD;
+}
+
+body {
+	font-family: 'Plus Jakarta Sans Variable', sans-serif;
+}
+/* 
+#quebrado-3-s-ellipse1_ts {
+	animation: quebrado-3-s-ellipse1_ts__ts 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-ellipse1_ts__ts {
+	0% {
+		transform: translate(150px, 334.264625px) scale(0, 0);
+		animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	16.666667% {
+		transform: translate(150px, 334.264625px) scale(1, 1);
+	}
+	100% {
+		transform: translate(150px, 334.264625px) scale(1, 1);
+	}
+}
+#quebrado-3-s-g1_ts {
+	animation: quebrado-3-s-g1_ts__ts 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-g1_ts__ts {
+	0% {
+		transform: translate(150px, 334.264625px) scale(0, 0);
+	}
+	6.666667% {
+		transform: translate(150px, 334.264625px) scale(0, 0);
+		animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	33.333333% {
+		transform: translate(150px, 334.264625px) scale(1, 1);
+	}
+	100% {
+		transform: translate(150px, 334.264625px) scale(1, 1);
+	}
+}
+#quebrado-3-u-phone_tr {
+	animation: quebrado-3-u-phone_tr__tr 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-u-phone_tr__tr {
+	0% {
+		transform: translate(160.485798px, 120.274621px) rotate(-45deg);
+	}
+	10% {
+		transform: translate(160.485798px, 120.274621px) rotate(-45deg);
+		animation-timing-function: cubic-bezier(0.115, 1.2, 0.32, 1.35);
+	}
+	33.333333% {
+		transform: translate(160.485798px, 120.274621px) rotate(0deg);
+	}
+	100% {
+		transform: translate(160.485798px, 120.274621px) rotate(0deg);
+	}
+}
+#quebrado-3-s-path4_to {
+	animation: quebrado-3-s-path4_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-path4_to__to {
+	0% {
+		transform: translate(65px, 138px);
+	}
+	10% {
+		transform: translate(65px, 138px);
+		animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+	}
+	33.333333% {
+		transform: translate(110.489538px, 16.658616px);
+		animation-timing-function: cubic-bezier(0.27, 0.93, 0.865, 0.89);
+	}
+	100% {
+		transform: translate(80.790037px, 139.601799px);
+	}
+}
+#quebrado-3-s-path5_to {
+	animation: quebrado-3-s-path5_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-path5_to__to {
+	0% {
+		transform: translate(65px, 138px);
+	}
+	10% {
+		transform: translate(65px, 138px);
+		animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+	}
+	33.333333% {
+		transform: translate(110.489538px, 16.658616px);
+		animation-timing-function: cubic-bezier(0.12, 0.35, 0.58, 0.73);
+	}
+	50% {
+		transform: translate(59.174347px, 19.141397px);
+		animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+	}
+	100% {
+		transform: translate(74.773923px, 58.122097px);
+	}
+}
+#quebrado-3-s-path6_to {
+	animation: quebrado-3-s-path6_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-path6_to__to {
+	0% {
+		transform: translate(65px, 138px);
+	}
+	10% {
+		transform: translate(65px, 138px);
+		animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+	}
+	33.333333% {
+		transform: translate(110.489538px, 16.658616px);
+		animation-timing-function: cubic-bezier(0.015, 0.765, 0.78, 0.845);
+	}
+	100% {
+		transform: translate(105.844294px, 128.993308px);
+	}
+}
+#quebrado-3-s-path7_to {
+	animation: quebrado-3-s-path7_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-path7_to__to {
+	0% {
+		transform: translate(65px, 138px);
+	}
+	10% {
+		transform: translate(65px, 138px);
+		animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+	}
+	33.333333% {
+		transform: translate(110.489538px, 16.658616px);
+		animation-timing-function: cubic-bezier(0.16, 0.47, 0.705, 0.935);
+	}
+	66.666667% {
+		transform: translate(56.706926px, 69.578903px);
+		animation-timing-function: cubic-bezier(0.18, 0.43, 0.545, 0.64);
+	}
+	100% {
+		transform: translate(80.790289px, 95.943504px);
+	}
+}
+#quebrado-3-s-path8_to {
+	animation: quebrado-3-s-path8_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes quebrado-3-s-path8_to__to {
+	0% {
+		transform: translate(65px, 138px);
+	}
+	10% {
+		transform: translate(65px, 138px);
+		animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+	}
+	33.333333% {
+		transform: translate(110.489538px, 16.658616px);
+		animation-timing-function: cubic-bezier(0.15, 0.5, 0.74, 0.42);
+	}
+	60% {
+		transform: translate(55.504865px, 35.905644px);
+		animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+	}
+	100% {
+		transform: translate(85.844293px, 60.792836px);
+	}
+} */
