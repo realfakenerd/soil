@@ -38,17 +38,17 @@ export default withMaterialColors(
           { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.1px' }
         ],
         'label-medium': [
-          '0.65rem',
+          '0.75rem',
           { lineHeight: '1rem', fontWeight: '500', letterSpacing: '0.5px' }
         ],
         'label-small': [
-          '0.75rem',
+          '0.65rem',
           { lineHeight: '1rem', fontWeight: '500', letterSpacing: '0.5px' }
         ]
       }
     }
   } satisfies Config,
   {
-    primary: `#56C843`,
+    primary: `#09369E`,
   }
 );
