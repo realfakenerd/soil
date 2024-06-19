@@ -1,4 +1,9 @@
 <script lang="ts">
+	import Icon from '@iconify/svelte';
+	import { createTabs, melt } from '@melt-ui/svelte';
+	import { circInOut } from 'svelte/easing';
+	import { crossfade } from 'svelte/transition';
+
 	let blob: HTMLElement;
 
 	function moveBlob(event: MouseEvent) {
@@ -84,6 +89,46 @@
 			iterations += 1 / 3;
 		}, 30);
 	}
+
+	const {
+		elements: { root, list, content, trigger },
+		states: { value }
+	} = createTabs({
+		orientation: 'vertical',
+		defaultValue: 'servico-1'
+	});
+
+	const triggers = [
+		{
+			id: 'servico-1',
+			tittle: 'Criação de Sites',
+			icon: 'mdi:web',
+			description: `Desenvolvemos sites modernos e responsivos para atender suas necessidades.`
+		},
+		{
+			id: 'servico-2',
+			tittle: 'Desenvolvimento de Aplicativos',
+			icon: 'mdi:application-braces',
+			description: `Desenvolvemos sites modernos e responsivos para atender suas necessidades.`
+		},
+		{
+			id: 'servico-3',
+			tittle: 'Suporte Técnico',
+			icon: 'mdi:auto-fix',
+			description: `Oferecemos suporte técnico especializado para resolver seus problemas.`
+		},
+		{
+			id: 'servico-4',
+			tittle: 'Limpeza e Manutenção',
+			icon: 'mdi:monitor-clean',
+			description: `Realizamos limpeza e manutenção em seus dispositivos eletrônicos.`
+		}
+	];
+
+	const [send, receive] = crossfade({
+		duration: 250,
+		easing: circInOut
+	});
 </script>
 
 <svelte:head>
@@ -92,7 +137,7 @@
 
 <svelte:body onmousemove={moveBlob} />
 
-<section class="backdrop-blur-3xl">
+<section class="backdrop-blur-3xl flex flex-col gap-16">
 	<div class="flex min-h-dvh justify-between w-full container mx-auto">
 		<div class="max-w-2xl w-full text-pretty self-center flex flex-col gap-6">
 			<div>
@@ -101,11 +146,11 @@
 						onmouseover={randomizeLetters}
 						onfocus={randomizeLetters}
 						data-value="Auri Tech"
-						class="text-display-medium font-medium"
+						class="text-display-large font-medium"
 					>
 						Auri Tech
 					</h1>
-					<h2 class="text-title-large text-primary">
+					<h2 class="text-headline-large text-primary">
 						Manutenção, conserto e montagem para todos os seus dispositivos
 					</h2>
 				</hgroup>
@@ -124,75 +169,122 @@
 		<!-- <Animation/> -->
 	</div>
 
-	<section class="container mx-auto p-6">
-		<div class="bg-surface shadow-md rounded-lg p-6">
-			<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Nossos Serviços</h2>
+	<section
+		use:melt={$root}
+		class="container mx-auto flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative gap-20"
+	>
+		<div class="bg-pattern"></div>
+		<div class="flex flex-col gap-6 bg-surface rounded-2xl px-4 py-3">
+			<header class="flex flex-col gap-2">
+				<Icon class="bg-surface-variant p-2 rounded-lg w-10 h-10" icon="mdi:performance" />
+				<h2 class="text-title-large">Maximize sua produtividade</h2>
+			</header>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+			<ul class="flex flex-col gap-1" use:melt={$list}>
+				{#each triggers as { id, tittle, icon, description }}
+					<li
+						class="px-3 pb-3 pt-1 relative trigger rounded-xl transition-all hocus:ring-1 hocus:ring-primary"
+						use:melt={$trigger(id)}
+					>
+						<main class="relative cursor-pointer z-10 inline-flex items-center gap-4 w-full">
+							<Icon width="58px" {icon} />
 
-				<!-- Serviço de Criação de Sites -->
-				<div class="bg-surface-variant text-on-surface-variant rounded-md p-5 flex flex-col items-center justify-between">
-					<h3 class="text-title-large mb-3">Criação de Sites</h3>
-					<p class="text-center mb-4 text-body-medium">
-						Desenvolvemos sites modernos e responsivos para atender suas necessidades.
+							<div class="flex flex-col gap-2">
+								<h2 class="text-label-large">{tittle}</h2>
+								<p class="text-body-small">{description}</p>
+							</div>
+						</main>
+						{#if $value === id}
+							<span
+								in:send={{ key: 'trigger' }}
+								out:receive={{ key: 'trigger' }}
+								class="absolute z-0 inset-0 bg-surface-variant w-full h-full rounded-[inherit]"
+							></span>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+		</div>
+		<div class="w-full">
+			<div class="bg-surface px-6 py-5 rounded-2xl" use:melt={$content('servico-1')}>
+				<div class="flex flex-col gap-4">
+					<h2 class="text-title-large font-medium">Soluções de Desenvolvimento de Sites</h2>
+					<p class="text-body-medium text-pretty">
+						Nosso serviço de <strong>Desenvolvimento de Sites</strong> oferece soluções completas e personalizadas
+						para criar a presença online perfeita para o seu negócio. Desenvolvemos desde sites institucionais
+						e blogs até portfólios e lojas virtuais, garantindo um design moderno e funcionalidade otimizada
+						para a melhor experiência do usuário.
 					</p>
-					<ul class="list-disc text-left pl-5 text-label-large">
-						<li>Sites Institucionais</li>
-						<li>Blogs e Portfólios</li>
-						<li>Loja Virtual (E-commerce)</li>
+					<ul class="flex flex-col text-label-large">
+						<li class="p-2 inline-flex gap-2 items-center">
+							<Icon icon="mdi:code" />Sites Institucionais
+						</li>
+						<li class="p-2 inline-flex gap-2 items-center">
+							<Icon icon="mdi:code" />Blogs e Portfólios
+						</li>
+						<li class="p-2 inline-flex gap-2 items-center">
+							<Icon icon="mdi:code" />Loja Virtual (E-commerce)
+						</li>
 					</ul>
 				</div>
+			</div>
+			<div class="bg-surface px-6 py-5 rounded-2xl" use:melt={$content('servico-2')}>
+				<h2 class="text-title-large font-medium">Soluções de Desenvolvimento de Sites</h2>
+				<p class="text-body-medium">
+					Com nosso serviço de <strong>Desenvolvimento de Aplicativos</strong>, você pode
+					transformar suas ideias em realidade. Criamos aplicativos para Android e iOS, além de
+					aplicativos web que se adaptam às suas necessidades específicas. Também desenvolvemos
+					softwares customizados para atender demandas particulares do seu negócio, com foco em
+					inovação e eficiência.
+				</p>
+				<ul class="list-disc text-left pl-5 text-label-large">
+					<li>Aplicativos Android e iOS</li>
+					<li>Aplicativos Web</li>
+					<li>Softwares Customizados</li>
+				</ul>
+			</div>
+			<div class="bg-surface px-6 py-5 rounded-2xl" use:melt={$content('servico-3')}>
+				<h2 class="text-title-large font-medium">Soluções de Desenvolvimento de Sites</h2>
+				<p class="text-body-medium">
+					Nossos <strong>Serviços de Suporte Técnico</strong> estão prontos para ajudar você a manter
+					a sua infraestrutura de TI funcionando perfeitamente. Oferecemos manutenção de computadores,
+					suporte remoto para resolver problemas à distância e configuração de redes para assegurar uma
+					conectividade eficiente e segura.
+				</p>
+				<ul class="list-disc text-left pl-5 text-label-large">
+					<li>Manutenção de Computadores</li>
+					<li>Suporte Remoto</li>
+					<li>Configuração de Redes</li>
+				</ul>
+			</div>
+			<div class="bg-surface px-6 py-5 rounded-2xl" use:melt={$content('servico-4')}>
+				<h2 class="text-title-large font-medium">Soluções de Desenvolvimento de Sites</h2>
 
-				<!-- Serviço de Desenvolvimento de Aplicativos -->
-				<div class="text-on-surface rounded-md shadow-xl shadow-surface-variant/10 hover:shadow-surface-variant/20 transition-shadow p-5 flex flex-col items-center justify-between">
-					<h3 class="text-title-large font-semibold mb-3">Desenvolvimento de Aplicativos</h3>
-					<p class="text-center mb-4 text-body-medium">
-						Criamos aplicativos móveis e desktop personalizados para sua empresa.
-					</p>
-					<ul class="list-disc text-left pl-5 text-label-large">
-						<li>Aplicativos Android e iOS</li>
-						<li>Aplicativos Web</li>
-						<li>Softwares Customizados</li>
-					</ul>
-				</div>
-
-				<!-- Serviço de Suporte Técnico -->
-				<div class="bg-surface-variant text-on-surface-variant rounded-md p-5 flex flex-col items-center justify-between">
-					<h3 class="text-title-large font-semibold mb-3">Suporte Técnico</h3>
-					<p class="text-center mb-4 text-body-medium">
-						Oferecemos suporte técnico especializado para resolver seus problemas.
-					</p>
-					<ul class="list-disc text-left pl-5 text-label-large">
-						<li>Manutenção de Computadores</li>
-						<li>Suporte Remoto</li>
-						<li>Configuração de Redes</li>
-					</ul>
-				</div>
-
-				<!-- Serviço de Limpeza e Manutenção -->
-				<div class="bg-red-500 text-on-surface rounded-md shadow-xl shadow-surface-variant/10 hover:shadow-surface-variant/20 transition-shadow p-5 flex flex-col items-center justify-between">
-					<h3 class="text-title-large font-semibold mb-3">Limpeza e Manutenção</h3>
-					<p class="text-center mb-4 text-body-medium">
-						Realizamos limpeza e manutenção em seus dispositivos eletrônicos.
-					</p>
-					<ul class="list-disc text-left pl-5 text-label-large">
-						<li>Limpeza de Hardware</li>
-						<li>Remoção de Vírus</li>
-						<li>Otimização de Desempenho</li>
-					</ul>
-				</div>
+				<p class="text-body-medium">
+					Nosso serviço de <strong>Manutenção de Hardware</strong> garante que seus equipamentos estejam
+					sempre em ótimo estado de funcionamento. Realizamos a limpeza completa do hardware, removemos
+					vírus e otimizamos o desempenho do seu sistema, para que você possa usufruir de um computador
+					rápido e seguro.
+				</p>
+				<ul class="list-disc text-left pl-5 text-label-large">
+					<li>Limpeza de Hardware</li>
+					<li>Remoção de Vírus</li>
+					<li>Otimização de Desempenho</li>
+				</ul>
 			</div>
 		</div>
 	</section>
 
-	<section class="container mx-auto items-center justify-center flex-col bento">
-		<h2 class="text-headline-medium font-bold text-center mb-8">Depoimentos de Clientes</h2>
-		<div class="bg-surface/70 rounded-3xl p-4 min-h-[50dvh] w-full bento-container">
+	<section class="container mx-auto items-center justify-center flex-col bento gap-2">
+		<h2 class="text-headline-medium font-bold text-center">Depoimentos de Clientes</h2>
+		<div
+			class="bg-surface/70 rounded-3xl p-4 min-h-[50dvh] w-full grid-cols-1 lg:grid-rows-[1fr_1fr_2fr] lg:grid-cols-[2fr_3fr_1fr_2fr] bento-container"
+		>
 			{#each depoimentos as { texto, servico, cliente, rows, columns }}
 				<div
 					style:--rows={rows}
 					style:--columns={columns}
-					class="bento-item rounded-2xl flex flex-col text-pretty justify-between w-full p-4 gap-4 bg-surface-variant/10"
+					class="bento-item lg:row-[var(--rows)] lg:col-[var(--columns)] rounded-2xl flex flex-col text-pretty justify-between w-full p-4 gap-4 bg-surface-variant/10"
 				>
 					<p class="text-body-medium">
 						{texto}
@@ -217,18 +309,29 @@
 <div bind:this={blob} class="blob bg-gradient-to-l"></div>
 
 <style>
+	.bg-pattern {
+		height: 100dvh;
+		width: 100%;
+
+		background-image: radial-gradient(theme('colors.primary') 9%, transparent 9%);
+		background-position: 0% 0%;
+		background-size: 6vmin 6vmin;
+
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: -10;
+	}
+
 	.bento {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1ch;
-		padding: 1ch;
 	}
 
 	.bento-container {
 		display: grid;
 		place-items: center;
-		grid-template-rows: 1fr 1fr 2fr;
-		grid-template-columns: 2fr 3fr 1fr 2fr;
 		gap: 1ch;
 		min-height: inherit;
 		flex: 2 0 320px;
@@ -237,8 +340,6 @@
 	.bento-item {
 		height: 100%;
 		width: 100%;
-		grid-column: var(--columns, span 1);
-		grid-row: var(--rows, span 1);
 	}
 
 	.blob {

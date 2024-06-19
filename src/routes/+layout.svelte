@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '../app.css';
+	import {enableCache} from '@iconify/svelte'
 
+	enableCache('all');
 	function animateNavBar(node: HTMLElement) {
 		let lastScrolltop = $state(0);
 		let ticking = $state(false);
@@ -59,7 +61,7 @@
 					<ul class="flex items-center gap-6 text-body-medium text-on-surface">
 						<li>
 							<a
-								class="px-5 py-2.5 hover:text-primary/75 transition-colors duration-200"
+								class="px-5 py-2.5 hocus:text-primary/75 transition-colors duration-200"
 								href="/servicos"
 							>
 								Serviços
@@ -68,14 +70,14 @@
 
 						<li>
 							<a
-								class="px-5 py-2.5 hover:text-primary/75 transition-colors duration-200"
+								class="px-5 py-2.5 hocus:text-primary/75 transition-colors duration-200"
 								href="/blog">Blog</a
 							>
 						</li>
 
 						<li>
 							<a
-								class="px-5 py-2.5 hover:text-primary/75 transition-colors duration-200"
+								class="px-5 py-2.5 hocus:text-primary/75 transition-colors duration-200"
 								href="/contato"
 							>
 								Contato
@@ -91,7 +93,7 @@
 				</a>
 
 				<div class="block md:hidden">
-					<button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+					<button class="rounded bg-gray-100 p-2 text-gray-600 transition hocus:text-gray-600/75">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5"
