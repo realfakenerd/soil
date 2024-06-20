@@ -1,8 +1,20 @@
 <script lang="ts">
+	import { onNavigate } from '$app/navigation';
 	import '../app.css';
 	import {enableCache} from '@iconify/svelte'
 
 	enableCache('all');
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
+
 	function animateNavBar(node: HTMLElement) {
 		let lastScrolltop = $state(0);
 		let ticking = $state(false);
@@ -31,7 +43,7 @@
 	let { children } = $props();
 </script>
 
-<header use:animateNavBar class="shadow-lg shadow-surface/20 fixed top-0 z-10 w-full">
+<header use:animateNavBar class="shadow-lg shadow-surface/20 fixed top-0 z-50 w-full">
 	<div class="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
 		<div class="flex h-16 items-center justify-between">
 			<div class="md:flex md:items-center md:gap-12">

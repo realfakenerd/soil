@@ -1,28 +1,9 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { createTabs, melt } from '@melt-ui/svelte';
+	import { animate, timeline } from 'motion';
 	import { circInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
-
-	let blob: HTMLElement;
-
-	function moveBlob(event: MouseEvent) {
-		const { clientX, clientY } = event;
-
-		requestAnimationFrame(() => {
-			blob.animate(
-				{
-					left: `${clientX}px`,
-					top: `${clientY}px`
-				},
-				{
-					duration: 3000,
-					fill: 'forwards',
-					easing: 'ease-in-out'
-				}
-			);
-		});
-	}
 
 	const depoimentos = [
 		{
@@ -69,26 +50,36 @@
 		}
 	];
 
-	function randomizeLetters(event: MouseEvent | FocusEvent) {
-		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-		const el = event.target as HTMLHeadingElement;
-		const originalText = el.dataset.value as string;
-		let iterations = 0;
-
-		const interval = setInterval(() => {
-			el.innerText = el.innerText
-				.split('')
-				.map((letter, index) => {
-					if (index < iterations) return originalText[index];
-
-					return letters[Math.floor(Math.random() * letters.length)];
-				})
-				.join('');
-
-			if (iterations >= originalText.length) clearInterval(interval);
-			iterations += 1 / 3;
-		}, 30);
-	}
+	let h1: HTMLHeadingElement;
+	$effect(() => {
+		timeline(
+			[
+				['.wrapper', { clipPath: ['circle(0 at 0 0)', 'circle(150% at 0 0)'] }, { duration: 2 }],
+				[
+					'.logo',
+					{ clipPath: ['circle(0 at 0 50%)', 'circle(150% at 0 50%)'] },
+					{ duration: 2, at: '-.5' }
+				],
+				[h1, { backgroundPositionX: '100rem' }, { duration: 5, easing: 'linear' }],
+				['.light', { top: '50%', filter: ['blur(0)', 'blur(500px)'] }, { duration: 5, at: 2 }],
+				[
+					'.btn',
+					{
+						clipPath: [
+							'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)',
+							'polygon(100% 0%, 0 0, 0 100%, 100% 100%)'
+						]
+					},
+					{ duration: 1, at: '<' }
+				]
+			],
+			{
+				defaultOptions: {
+					easing: [0.83, 0, 0.17, 1]
+				}
+			}
+		);
+	});
 
 	const {
 		elements: { root, list, content, trigger },
@@ -135,22 +126,22 @@
 	<title>Auri - Inicio</title>
 </svelte:head>
 
-<svelte:body onmousemove={moveBlob} />
-
-<section class="backdrop-blur-3xl flex flex-col gap-16">
-	<div class="flex min-h-dvh justify-between w-full container mx-auto">
-		<div class="max-w-2xl w-full text-pretty self-center flex flex-col gap-6">
-			<div>
+<section class="flex flex-col gap-16">
+	<div
+		class="flex gap-4 flex-col-reverse md:flex-row min-h-dvh justify-evenly w-full container items-center relative"
+	>
+		<div class="light w-1/2"></div>
+		<div class="max-w-2xl w-full text-pretty flex flex-col gap-6">
+			<div class="wrapper">
 				<hgroup>
 					<h1
-						onmouseover={randomizeLetters}
-						onfocus={randomizeLetters}
-						data-value="Auri Tech"
-						class="text-display-large font-medium"
+						bind:this={h1}
+						style="background-position-x: 0px;"
+						class="text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
 					>
 						Auri Tech
 					</h1>
-					<h2 class="text-headline-large text-primary">
+					<h2 class="text-headline-small lg:text-headline-large text-primary">
 						Manutenção, conserto e montagem para todos os seus dispositivos
 					</h2>
 				</hgroup>
@@ -161,17 +152,32 @@
 			</div>
 
 			<div class="flex justify-center gap-4">
-				<a class="rounded-xl interactive-bg-secondary px-5 py-2.5 text-label-large" href="/">
+				<a class="btn rounded-xl interactive-bg-secondary px-5 py-2.5 text-label-large" href="/">
 					Get Started
 				</a>
 			</div>
 		</div>
-		<!-- <Animation/> -->
+		<svg
+			class="logo hidden md:block"
+			width="350"
+			height="400"
+			viewBox="0 0 350 400"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M167.474 8.60088C171.458 4.04761 178.542 4.04761 182.526 8.60088L344.238 193.415C347.537 197.185 347.537 202.815 344.238 206.585L182.526 391.399C178.542 395.952 171.458 395.952 167.474 391.399L5.76191 206.585C2.46293 202.815 2.46294 197.185 5.76192 193.415L167.474 8.60088Z"
+				fill="#F2DB64"
+			/>
+			<path d="M174.667 390.488L7.99996 200.244H174.667V390.488Z" fill="#6A92D5" />
+			<path d="M174.667 390.488L341.333 200.244H258H174.667V390.488Z" fill="#173574" />
+			<path d="M174.667 10V105.122V200.244H258H341.333L258 105.122L174.667 10Z" fill="#09369E" />
+		</svg>
 	</div>
 
 	<section
 		use:melt={$root}
-		class="container mx-auto flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative gap-20"
+		class="container flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative md:gap-4 lg:gap-20"
 	>
 		<div class="bg-pattern"></div>
 		<div class="flex flex-col gap-6 bg-surface rounded-2xl px-4 py-3">
@@ -306,16 +312,14 @@
 	</section>
 </section>
 
-<div bind:this={blob} class="blob bg-gradient-to-l"></div>
-
 <style>
 	.bg-pattern {
 		height: 100dvh;
 		width: 100%;
 
-		background-image: radial-gradient(theme('colors.primary') 9%, transparent 9%);
+		background-image: radial-gradient(theme('colors.primary') 5%, transparent 5%);
 		background-position: 0% 0%;
-		background-size: 6vmin 6vmin;
+		background-size: 3vmin 3vmin;
 
 		position: absolute;
 		left: 0;
@@ -342,29 +346,24 @@
 		width: 100%;
 	}
 
-	.blob {
-		background: linear-gradient(to left, theme('colors.primary'), theme('colors.tertiary'));
-		position: fixed;
+	.light {
+		background: linear-gradient(to left, theme('colors.primary'), theme('colors.yellow'));
+		position: absolute;
 		aspect-ratio: 1;
-		width: 200px;
+		top: -60%;
 		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -60%);
 		border-radius: 50%;
 		animation: rotate 20s infinite linear;
-		z-index: -1;
-		filter: blur(50px);
+		filter: blur(500px);
 	}
 
 	@keyframes rotate {
 		0% {
-			transform: translate(-50%, -50%) rotate(0deg) scale(1);
-		}
-		50% {
-			transform: translate(-50%, -50%) rotate(180deg) scale(1, 1.5);
+			transform: translate(-50%, -50%) rotate(0deg);
 		}
 		100% {
-			transform: translate(-50%, -50%) rotate(360deg) scale(1);
+			transform: translate(-50%, -50%) rotate(360deg);
 		}
 	}
 </style>
