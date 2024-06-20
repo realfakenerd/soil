@@ -130,18 +130,18 @@
 	<div
 		class="flex gap-4 flex-col-reverse md:flex-row min-h-dvh justify-evenly w-full container items-center relative"
 	>
-		<div class="light w-1/2"></div>
+		<div class="light w-full md:w-1/2"></div>
 		<div class="max-w-2xl w-full text-pretty flex flex-col gap-6">
 			<div class="wrapper">
 				<hgroup>
 					<h1
 						bind:this={h1}
 						style="background-position-x: 0px;"
-						class="text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
+						class="text-display-small md:text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
 					>
 						Auri Tech
 					</h1>
-					<h2 class="text-headline-small lg:text-headline-large text-primary">
+					<h2 class="text-tittle-large lg:text-headline-large text-primary">
 						Manutenção, conserto e montagem para todos os seus dispositivos
 					</h2>
 				</hgroup>
