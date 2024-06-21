@@ -3,9 +3,9 @@
 	import { page } from '$app/stores';
 	import '../app.css';
 	import Icon, { enableCache } from '@iconify/svelte';
+	import { melt, createDropdownMenu } from '@melt-ui/svelte';
 
 	enableCache('all');
-
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
 		return new Promise((resolve) => {
@@ -16,15 +16,17 @@
 		});
 	});
 
+	const {
+		elements: { trigger }
+	} = createDropdownMenu();
+
 	let { children } = $props();
 </script>
 
-<header style="view-transition-name: navbar;" class="fixed top-0 z-50 w-full sm:p-2 lg:py-8">
-	<div
-		class="container w-full bg-surface flex items-center justify-between gap-4 px-3 py-2 sm:rounded-2xl"
-	>
-		<div class="flex items-center gap-12">
-			<a class="inline-flex gap-4 items-center" href="/">
+<header>
+	<section class="container">
+		<div>
+			<a href="/">
 				<svg
 					width="32"
 					height="32"
@@ -41,12 +43,12 @@
 					<path d="M151 20V112.5V205H217.41H283.82L217.41 112.5L151 20Z" fill="#09369E" />
 				</svg>
 
-				<h1 class="text-title-large">Auri Tech</h1>
+				<h1>Auri Tech</h1>
 			</a>
 		</div>
 
-		<nav class="hidden md:block" aria-label="Global">
-			<ul class="flex items-center text-body-medium text-on-surface">
+		<nav aria-label="Global">
+			<ul>
 				<li aria-current={$page.url.pathname === '/servicos' ? 'page' : undefined}>
 					<a href="/servicos"> Serviços </a>
 				</li>
@@ -65,12 +67,12 @@
 			</a>
 
 			<div class="block md:hidden">
-				<button class="rounded bg-gray-100 p-2 text-gray-600 transition hocus:text-gray-600/75">
+				<button use:melt={$trigger} class="text-on-surface">
 					<Icon icon="mdi:menu" />
 				</button>
 			</div>
 		</div>
-	</div>
+	</section>
 </header>
 
 <main>
@@ -78,6 +80,54 @@
 </main>
 
 <style>
+	header {
+		position: fixed;
+		top: 0;
+		z-index: 50;
+		width: 100%;
+		view-transition-name: navbar;
+	}
+
+	.container {
+		background-color: theme('colors.surface');
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: theme('size.4');
+		padding-inline: theme('size.3');
+		padding-block: theme('size.2');
+
+		& > div {
+			display: flex;
+			align-items: center;
+			gap: theme('size.12');
+
+			& a {
+				display: flex;
+				gap: theme('size.4');
+				align-items: center;
+			}
+
+			& h1 {
+				@apply text-title-large;
+			}
+		}
+	}
+
+	
+
+	nav {
+		display: none;
+	}
+
+	ul {
+		display: flex;
+		align-items: center;
+		color: theme('colors.on-surface');
+
+		@apply text-body-medium;
+	}
+
 	li {
 		position: relative;
 
@@ -102,6 +152,28 @@
 			left: calc(50%);
 			transform: translateX(-50%);
 			view-transition-name: active-page;
+		}
+	}
+
+	@media (min-width: 640px) {
+		header {
+			padding: theme('size.2');
+		}
+
+		.container {
+			border-radius: theme('borderRadius.2xl');
+		}
+	}
+
+	@media (min-width: 768px) {
+		nav {
+			display: block;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		header {
+			padding-block: theme('size.8');
 		}
 	}
 
