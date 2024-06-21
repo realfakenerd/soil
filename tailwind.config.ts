@@ -11,14 +11,6 @@ export default withMaterialColors(
 		content: ['./src/**/*.{html,js,svelte,ts}'],
 		plugins: [hocus],
 		theme: {
-			screens: {
-				xs: '100%',
-				sm: '599px',
-				md: '904px',
-				lg: '1239px',
-				xl: '1439px',
-				'2xl': '1440px'
-			},
 			container: {
 				center: true,
 				padding: '4rem'

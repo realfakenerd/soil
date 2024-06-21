@@ -7,16 +7,17 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
-		interface ViewTransition {
-			updateCallbackDone: Promise<void>;
-			ready: Promise<void>;
-			finished: Promise<void>;
-			skipTransition: () => void;
-		}
-	
-		interface Document {
-			startViewTransition(updateCallback: () => Promise<void>): ViewTransition;
-		}
+	}
+
+	interface ViewTransition {
+		updateCallbackDone: Promise<void>;
+		ready: Promise<void>;
+		finished: Promise<void>;
+		skipTransition: () => void;
+	}
+
+	interface Document {
+		startViewTransition(updateCallback: () => Promise<void>): ViewTransition;
 	}
 }
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { createTabs, melt } from '@melt-ui/svelte';
-	import { animate, timeline } from 'motion';
+	import { animate, glide, timeline } from 'motion';
 	import { circInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
 
@@ -50,7 +50,6 @@
 		}
 	];
 
-	let h1: HTMLHeadingElement;
 	$effect(() => {
 		timeline(
 			[
@@ -60,8 +59,11 @@
 					{ clipPath: ['circle(0 at 0 50%)', 'circle(150% at 0 50%)'] },
 					{ duration: 2, at: '-.5' }
 				],
-				[h1, { backgroundPositionX: '100rem' }, { duration: 5, easing: 'linear' }],
-				['.light', { top: '50%', filter: ['blur(0)', 'blur(500px)'] }, { duration: 5, at: 2 }],
+				[
+					'.light',
+					{ top: '50%', filter: ['blur(0)', 'blur(500px)'] },
+					{ duration: 5, at: 2 }
+				],
 				[
 					'.btn',
 					{
@@ -71,7 +73,8 @@
 						]
 					},
 					{ duration: 1, at: '<' }
-				]
+				],
+				['.title', { backgroundPositionX: '100rem' }, { duration: 5, easing: 'linear' }]
 			],
 			{
 				defaultOptions: {
@@ -130,14 +133,13 @@
 	<div
 		class="flex gap-4 flex-col-reverse md:flex-row min-h-dvh justify-evenly w-full container items-center relative"
 	>
-		<div class="light w-full md:w-1/2"></div>
+		<div class="light w-1/2"></div>
 		<div class="max-w-2xl w-full text-pretty flex flex-col gap-6">
 			<div class="wrapper">
 				<hgroup>
 					<h1
-						bind:this={h1}
 						style="background-position-x: 0px;"
-						class="text-display-small md:text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
+						class="title text-display-small md:text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
 					>
 						Auri Tech
 					</h1>
@@ -313,20 +315,6 @@
 </section>
 
 <style>
-	.bg-pattern {
-		height: 100dvh;
-		width: 100%;
-
-		background-image: radial-gradient(theme('colors.primary') 5%, transparent 5%);
-		background-position: 0% 0%;
-		background-size: 3vmin 3vmin;
-
-		position: absolute;
-		left: 0;
-		right: 0;
-		z-index: -10;
-	}
-
 	.bento {
 		display: flex;
 		flex-wrap: wrap;
