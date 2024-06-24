@@ -17,8 +17,11 @@
 	});
 
 	const {
-		elements: { trigger }
-	} = createDropdownMenu();
+		elements: { trigger, menu, item },
+		states: { open }
+	} = createDropdownMenu({
+		forceVisible: true
+	});
 
 	let { children } = $props();
 </script>
@@ -66,10 +69,25 @@
 				Saiba mais
 			</a>
 
-			<div class="block md:hidden">
-				<button use:melt={$trigger} class="text-on-surface">
+			<div class="flex items-center md:hidden">
+				<button use:melt={$trigger} class="px-4 text-on-surface">
+					<span class="sr-only">Menu</span>
 					<Icon icon="mdi:menu" />
 				</button>
+
+				{#if $open}
+					<menu use:melt={$menu}>
+						<li use:melt={$item}>
+							<a href="/servicos">Serviços</a>
+						</li>
+						<li use:melt={$item}>
+							<a href="/contato">Contato</a>
+						</li>
+						<li use:melt={$item}>
+							<a href="/blog">Blog</a>
+						</li>
+					</menu>
+				{/if}
 			</div>
 		</div>
 	</section>
@@ -114,8 +132,6 @@
 		}
 	}
 
-	
-
 	nav {
 		display: none;
 	}
@@ -126,33 +142,39 @@
 		color: theme('colors.on-surface');
 
 		@apply text-body-medium;
-	}
 
-	li {
-		position: relative;
+		li {
+			position: relative;
 
-		a {
-			padding-inline: 1.25rem;
-			padding-block: 0.625rem;
-			transition: color 200ms;
+			a {
+				padding-inline: 1.25rem;
+				padding-block: 0.625rem;
+				transition: color 200ms;
 
-			&:hover,
-			&:focus {
-				color: theme('colors.primary');
+				&:hover,
+				&:focus {
+					color: theme('colors.primary');
+				}
+			}
+
+			&[aria-current='page']::before {
+				content: '';
+				position: absolute;
+				width: 100%;
+				height: 2px;
+				background-color: theme('colors.primary');
+				bottom: -4px;
+				left: calc(50%);
+				transform: translateX(-50%);
+				view-transition-name: active-page;
 			}
 		}
+	}
 
-		&[aria-current='page']::before {
-			content: '';
-			position: absolute;
-			width: 100%;
-			height: 2px;
-			background-color: theme('colors.primary');
-			bottom: -4px;
-			left: calc(50%);
-			transform: translateX(-50%);
-			view-transition-name: active-page;
-		}
+	menu {
+		position: relative;
+		z-index: 50;
+		padding: theme('size.4');
 	}
 
 	@media (min-width: 640px) {

@@ -158,7 +158,7 @@
 
 	<section
 		use:melt={$root}
-		class="container flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative md:gap-4 lg:gap-20"
+		class="section-servicos container flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative md:gap-4 lg:gap-20"
 	>
 		<div class="bg-pattern"></div>
 		<div class="flex flex-col gap-6 bg-surface rounded-2xl px-4 py-3">
@@ -193,7 +193,7 @@
 			</ul>
 		</div>
 		<div class="w-full">
-			<div class="bg-surface px-6 py-5 rounded-2xl" use:melt={$content('servico-1')}>
+			<div class="bg-surface md:px-6 py-5 rounded-2xl" use:melt={$content('servico-1')}>
 				<div class="flex flex-col gap-4">
 					<h2 class="text-title-large font-medium">Soluções de Desenvolvimento de Sites</h2>
 					<p class="text-body-medium text-pretty">
