@@ -279,6 +279,7 @@
 					<div class="flex gap-x-4 items-center">
 						<img
 							class="w-10 h-10 rounded-full ring ring-primary bg-tertiary/30"
+							loading="lazy"
 							src={`https://api.dicebear.com/9.x/personas/svg?size=40&seed=${cliente.split(' ')[0]}`}
 							alt="Foto de Maria"
 						/>
@@ -353,6 +354,7 @@
 	}
 
 	.wrapper {
+		padding-inline: theme('size.4');
 		clip-path: circle(0 at 0 0);
 
 		& h2 {
