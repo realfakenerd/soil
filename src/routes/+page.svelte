@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { createTabs, melt } from '@melt-ui/svelte';
-	import { animate, glide, timeline } from 'motion';
+	import { timeline } from 'motion';
 	import { circInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
 
@@ -53,24 +53,13 @@
 	$effect(() => {
 		timeline(
 			[
-				['.wrapper', { clipPath: ['circle(0 at 0 0)', 'circle(150% at 0 0)'] }, { duration: 2 }],
-				[
-					'.logo',
-					{ clipPath: ['circle(0 at 0 50%)', 'circle(150% at 0 50%)'] },
-					{ duration: 2, at: '-.5' }
-				],
-				[
-					'.light',
-					{ top: '50%', filter: ['blur(0)', 'blur(500px)'] },
-					{ duration: 5, at: 2 }
-				],
+				['.wrapper', { clipPath: 'circle(150% at 0 0)' }, { duration: 2 }],
+				['.logo', { clipPath: 'circle(150% at 0 50%)' }, { duration: 2, at: '-.5' }],
+				['.light', { top: '50%', filter: 'blur(500px)' }, { duration: 5, at: 2 }],
 				[
 					'.btn',
 					{
-						clipPath: [
-							'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)',
-							'polygon(100% 0%, 0 0, 0 100%, 100% 100%)'
-						]
+						clipPath: ['polygon(100% 0%, 0 0, 0 100%, 100% 100%)']
 					},
 					{ duration: 1, at: '<' }
 				],
@@ -129,28 +118,17 @@
 	<title>Auri - Inicio</title>
 </svelte:head>
 
-<section class="flex flex-col gap-16">
-	<div
-		class="flex gap-4 flex-col-reverse md:flex-row min-h-dvh justify-evenly w-full container items-center relative"
-	>
-		<div class="light w-1/2"></div>
-		<div class="max-w-2xl w-full text-pretty flex flex-col gap-6">
+<section class="section-container">
+	<div class="section-hero">
+		<div class="light"></div>
+		<div class="wrapper-text">
 			<div class="wrapper">
 				<hgroup>
-					<h1
-						style="background-position-x: 0px;"
-						class="title text-display-small md:text-display-large font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-yellow to-primary"
-					>
-						Auri Tech
-					</h1>
-					<h2 class="text-tittle-large lg:text-headline-large text-primary">
-						Manutenção, conserto e montagem para todos os seus dispositivos
-					</h2>
+					<h1 class="title">Auri Tech</h1>
+					<h2>Manutenção, conserto e montagem para todos os seus dispositivos</h2>
 				</hgroup>
 
-				<p class="mt-4 text-body-large">
-					Soluções rápidas e eficazes para sites, crm e aplicativos
-				</p>
+				<p>Soluções rápidas e eficazes para sites, crm e aplicativos</p>
 			</div>
 
 			<div class="flex justify-center gap-4">
@@ -159,8 +137,9 @@
 				</a>
 			</div>
 		</div>
+
 		<svg
-			class="logo hidden md:block"
+			class="logo"
 			width="350"
 			height="400"
 			viewBox="0 0 350 400"
@@ -315,6 +294,32 @@
 </section>
 
 <style>
+	.section-container {
+		display: flex;
+		flex-direction: column;
+		gap: theme('size.16');
+	}
+
+	.section-hero {
+		display: flex;
+		gap: theme('size.4');
+		flex-direction: column-reverse;
+		min-height: 100dvh;
+		justify-content: space-evenly;
+		width: 100%;
+		align-items: center;
+		position: relative;
+	}
+
+	.wrapper-text {
+		max-width: 42rem;
+		width: 100%;
+		text-wrap: pretty;
+		display: flex;
+		flex-direction: column;
+		gap: theme('size.6');
+	}
+
 	.bento {
 		display: flex;
 		flex-wrap: wrap;
@@ -340,10 +345,49 @@
 		aspect-ratio: 1;
 		top: -60%;
 		left: 50%;
+		width: 50%;
 		transform: translate(-50%, -60%);
 		border-radius: 50%;
 		animation: rotate 20s infinite linear;
-		filter: blur(500px);
+		filter: blur(0px);
+	}
+
+	.wrapper {
+		clip-path: circle(0 at 0 0);
+
+		& h2 {
+			color: theme('colors.primary');
+			@apply text-title-large;
+		}
+
+		& p {
+			margin-top: theme('size.4');
+			@apply text-body-large;
+		}
+	}
+
+	.title {
+		font-weight: bold;
+		background-clip: text;
+		color: transparent;
+		background-position-x: 0px;
+		background-image: linear-gradient(
+			to right,
+			theme('colors.primary-container'),
+			theme('colors.yellow'),
+			theme('colors.primary-container')
+		);
+
+		@apply text-display-small;
+	}
+
+	.logo {
+		clip-path: circle(0 at 0 50%);
+		display: none;
+	}
+
+	.btn {
+		clip-path: polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%);
 	}
 
 	@keyframes rotate {
@@ -352,6 +396,28 @@
 		}
 		100% {
 			transform: translate(-50%, -50%) rotate(360deg);
+		}
+	}
+
+	@media (min-width: 768px) {
+		.section-hero {
+			flex-direction: row;
+		}
+
+		.title {
+			@apply text-display-large;
+		}
+
+		.logo {
+			display: block;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.wrapper {
+			& h2 {
+				@apply text-headline-large;
+			}
 		}
 	}
 </style>
