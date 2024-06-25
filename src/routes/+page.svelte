@@ -158,7 +158,7 @@
 
 	<section
 		use:melt={$root}
-		class="section-servicos container flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative md:gap-4 lg:gap-20"
+		class="section-servicos container mx-auto flex flex-col md:flex-row-reverse items-center w-full min-h-dvh relative md:gap-4 lg:gap-20"
 	>
 		<div class="bg-pattern"></div>
 		<div class="flex flex-col gap-6 bg-surface rounded-2xl px-4 py-3">
@@ -262,7 +262,7 @@
 		</div>
 	</section>
 
-	<section class="container mx-auto items-center justify-center flex-col bento gap-2">
+	<section class="container items-center justify-center flex-col bento gap-2">
 		<h2 class="text-headline-medium font-bold text-center">Depoimentos de Clientes</h2>
 		<div
 			class="bg-surface/70 rounded-3xl p-4 min-h-[50dvh] w-full grid-cols-1 lg:grid-rows-[1fr_1fr_2fr] lg:grid-cols-[2fr_3fr_1fr_2fr] bento-container"

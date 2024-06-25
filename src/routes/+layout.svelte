@@ -29,7 +29,7 @@
 
 <header>
 	<section class="container">
-		<div>
+		<div class="logo-container">
 			<a href="/">
 				<svg
 					width="32"
@@ -65,39 +65,35 @@
 			</ul>
 		</nav>
 
-		<div class="flex items-center gap-4">
-			<a class="rounded-lg interactive-bg-secondary px-5 py-2.5 text-label-large" href="/sobre">
-				Saiba mais
-			</a>
+		<div class="menu-container">
+			<a class="btn interactive-bg-secondary" href="/sobre"> Saiba mais </a>
 
-			<div class="flex items-center md:hidden">
-				<button use:melt={$trigger} class="px-4 text-on-surface">
+			<div class="menu-wrapper">
+				<button use:melt={$trigger} class="btn-trigger">
 					<span class="sr-only">Menu</span>
-					<Icon icon="mdi:menu" />
+					<Icon width="24px" icon="mdi:menu" />
 				</button>
 
-				{#if $open}
-					<menu transition:fly use:melt={$menu}>
-						<li use:melt={$item}>
-							<a href="/servicos">
-								<Icon width="24px" icon="mdi:performance" />
-								<span>Serviços</span>
-							</a>
-						</li>
-						<li use:melt={$item}>
-							<a href="/contato">
-								<Icon width="24px" icon="mdi:contact" />
-								<span>Contato</span>
-							</a>
-						</li>
-						<li use:melt={$item}>
-							<a href="/blog">
-								<Icon width="24px" icon="mdi:newspaper" />
-								<span>Blog</span>
-							</a>
-						</li>
-					</menu>
-				{/if}
+				<menu transition:fly use:melt={$menu}>
+					<li use:melt={$item}>
+						<a href="/servicos">
+							<Icon width="24px" icon="mdi:performance" />
+							<span>Serviços</span>
+						</a>
+					</li>
+					<li use:melt={$item}>
+						<a href="/contato">
+							<Icon width="24px" icon="mdi:contact" />
+							<span>Contato</span>
+						</a>
+					</li>
+					<li use:melt={$item}>
+						<a href="/blog">
+							<Icon width="24px" icon="mdi:newspaper" />
+							<span>Blog</span>
+						</a>
+					</li>
+				</menu>
 			</div>
 		</div>
 	</section>
@@ -125,18 +121,18 @@
 		padding-inline: theme('size.3');
 		padding-block: theme('size.2');
 
-		& > div {
+		.logo-container {
 			display: flex;
 			align-items: center;
 			gap: theme('size.12');
 
-			& a {
+			a {
 				display: flex;
 				gap: theme('size.4');
 				align-items: center;
 			}
 
-			& h1 {
+			h1 {
 				@apply text-title-large;
 			}
 		}
@@ -180,6 +176,28 @@
 			}
 		}
 	}
+	
+	.btn-trigger {
+		color: theme('colors.on-surface');
+		padding: theme('size.2');
+		border-radius: 999px;
+		transition: color 150ms;
+
+		&[data-state='open'] {
+			color: theme('colors.primary');
+		}
+	}
+
+	.menu-container {
+		display: flex;
+		align-items: center;
+		gap: theme('size.1');
+	}
+
+	.menu-wrapper {
+		display: flex;
+		align-items: center;
+	}
 
 	menu {
 		position: relative;
@@ -189,17 +207,31 @@
 		padding: theme('size.2') theme('size.3');
 		min-width: 112px;
 		max-width: 280px;
+		transform: scale(1);
+		transform-origin: top center;
+		transition: transform 200ms ease, opacity 150ms ease;
 
 		@apply text-label-large;
 
-		& li {
+		&[data-state='closed'] {
+			opacity: 0;
+			transform: scale(0);
+		}
+
+
+		li {
 			display: flex;
 			align-items: center;
 			justify-content: start;
 			height: 48px;
+			transition: color 150ms;
+
+			&:hover {
+				color: theme('colors.primary');
+			}
 		}
 
-		& a {
+		a {
 			display: inline-flex;
 			gap: theme('size.3');
 			align-items: center;
@@ -219,6 +251,10 @@
 	@media (min-width: 768px) {
 		nav {
 			display: block;
+		}
+
+		.menu-wrapper {
+			display: none;
 		}
 	}
 

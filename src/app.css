@@ -16,10 +16,20 @@
 }
 
 body {
+	background-color: theme('colors.surface');
+	color: theme('colors.on-surface');
 	font-family: 'Inter Variable', sans-serif;
+	min-height: 100dvh;
 }
 
 @layer components {
+	.btn {
+		border-radius: theme('borderRadius.lg');
+		padding: theme('size.2') theme('size.4');
+
+		@apply text-label-large;
+	}
+
 	.bg-pattern {
 		--size: 3vmin;
 		height: 100dvh;

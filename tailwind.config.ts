@@ -11,10 +11,6 @@ export default withMaterialColors(
 		content: ['./src/**/*.{html,js,svelte,ts}'],
 		plugins: [hocus],
 		theme: {
-			container: {
-				center: true,
-				padding: '4rem'
-			},
 			extend: {
 				fontFamily: {
 					sans: 'Roboto'
