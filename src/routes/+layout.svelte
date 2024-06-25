@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { fly } from 'svelte/transition';
 	import '../app.css';
 	import Icon, { enableCache } from '@iconify/svelte';
 	import { melt, createDropdownMenu } from '@melt-ui/svelte';
@@ -76,15 +77,24 @@
 				</button>
 
 				{#if $open}
-					<menu use:melt={$menu}>
+					<menu transition:fly use:melt={$menu}>
 						<li use:melt={$item}>
-							<a href="/servicos">Serviços</a>
+							<a href="/servicos">
+								<Icon width="24px" icon="mdi:performance" />
+								<span>Serviços</span>
+							</a>
 						</li>
 						<li use:melt={$item}>
-							<a href="/contato">Contato</a>
+							<a href="/contato">
+								<Icon width="24px" icon="mdi:contact" />
+								<span>Contato</span>
+							</a>
 						</li>
 						<li use:melt={$item}>
-							<a href="/blog">Blog</a>
+							<a href="/blog">
+								<Icon width="24px" icon="mdi:newspaper" />
+								<span>Blog</span>
+							</a>
 						</li>
 					</menu>
 				{/if}
@@ -174,7 +184,26 @@
 	menu {
 		position: relative;
 		z-index: 50;
-		padding: theme('size.4');
+		background-color: theme('colors.surface-variant');
+		border-radius: theme('borderRadius.md');
+		padding: theme('size.2') theme('size.3');
+		min-width: 112px;
+		max-width: 280px;
+
+		@apply text-label-large;
+
+		& li {
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			height: 48px;
+		}
+
+		& a {
+			display: inline-flex;
+			gap: theme('size.3');
+			align-items: center;
+		}
 	}
 
 	@media (min-width: 640px) {
