@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import Icon, { enableCache } from '@iconify/svelte';
+	import { createDropdownMenu, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
-	import Icon, { enableCache } from '@iconify/svelte';
-	import { melt, createDropdownMenu } from '@melt-ui/svelte';
 
 	enableCache('all');
 	onNavigate((navigation) => {
@@ -18,13 +17,12 @@
 	});
 
 	const {
-		elements: { trigger, menu, item },
-		states: { open }
+		elements: { trigger, menu, item }
 	} = createDropdownMenu({
 		forceVisible: true
 	});
 
-	let { children } = $props();
+	let { children, data } = $props();
 </script>
 
 <header>
@@ -53,13 +51,13 @@
 
 		<nav aria-label="Global">
 			<ul>
-				<li aria-current={$page.url.pathname === '/servicos' ? 'page' : undefined}>
+				<li aria-current={data.currentUrl === '/servicos' ? 'page' : undefined}>
 					<a href="/servicos"> Serviços </a>
 				</li>
-				<li aria-current={$page.url.pathname === '/contato' ? 'page' : undefined}>
+				<li aria-current={data.currentUrl === '/contato' ? 'page' : undefined}>
 					<a href="/contato"> Contato </a>
 				</li>
-				<li aria-current={$page.url.pathname === '/blog' ? 'page' : undefined}>
+				<li aria-current={data.currentUrl === '/blog' ? 'page' : undefined}>
 					<a href="/blog">Blog</a>
 				</li>
 			</ul>
@@ -115,6 +113,7 @@
 	.container {
 		background-color: theme('colors.surface');
 		display: flex;
+		margin-inline: auto;
 		align-items: center;
 		justify-content: space-between;
 		gap: theme('size.4');
@@ -176,7 +175,7 @@
 			}
 		}
 	}
-	
+
 	.btn-trigger {
 		color: theme('colors.on-surface');
 		padding: theme('size.2');
@@ -209,7 +208,9 @@
 		max-width: 280px;
 		transform: scale(1);
 		transform-origin: top center;
-		transition: transform 200ms ease, opacity 150ms ease;
+		transition:
+			transform 200ms ease,
+			opacity 150ms ease;
 
 		@apply text-label-large;
 
@@ -217,7 +218,6 @@
 			opacity: 0;
 			transform: scale(0);
 		}
-
 
 		li {
 			display: flex;

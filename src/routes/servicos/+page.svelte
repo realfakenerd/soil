@@ -5,8 +5,8 @@
 		animate(
 			'.bg-pattern',
 			{
-				clipPath: ['circle(0 at 50% 50%)', 'circle(100% at 50% 50%)'],
-				backgroundSize: ['2.75vmin 2.75vmin', '3vmin 3vmin']
+				clipPath: 'circle(100% at 50% 50%)',
+				backgroundSize: ['3vmin 3vmin']
 			},
 			{
 				clipPath: {
@@ -27,6 +27,15 @@
 	<title>Auri - Serviços</title>
 </svelte:head>
 
-<section class="bg-pattern flex items-center" style="will-change: clip-path;">
+<section class="bg-pattern">
 	<h1 class="text-display-large">Serviços</h1>
 </section>
+
+<style>
+	section {
+		display: flex;
+		align-items: center;
+		clip-path: circle(0 at 50% 50%);
+		background-size: 2.75vmin 2.75vmin;
+	}
+</style>
