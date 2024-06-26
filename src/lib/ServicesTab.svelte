@@ -22,7 +22,7 @@
 			id: 'servico-1',
 			tittle: 'Criação de Sites',
 			icon: 'mdi:web',
-			href: '/servicos',
+			href: '/servicos#criacaoSites',
 			description: `Desenvolvemos sites modernos e responsivos para atender suas necessidades.`
 		},
 		{
